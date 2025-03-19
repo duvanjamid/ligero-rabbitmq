@@ -12,15 +12,13 @@ services:
       - key: RABBITMQ_DEFAULT_USER
         value: usuario
       - key: RABBITMQ_DEFAULT_PASS
-        generateValue: true  # Genera una contraseña segura automáticamente
-      - key: RABBITMQ_CONFIG_FILE
-        value: /etc/rabbitmq/rabbitmq
-      - key: RABBITMQ_ENABLED_PLUGINS_FILE
-        value: /etc/rabbitmq/enabled_plugins
-    healthCheckPath: /api/health-checks/node
-    healthCheckTimeout: 60
+        generateValue: true
     ports:
       - port: 15672
         name: management
+        external: true  # Hacer externo explícitamente
       - port: 5672
         name: amqp
+        external: true  # Hacer externo explícitamente
+    healthCheckPath: /
+    healthCheckTimeout: 120
