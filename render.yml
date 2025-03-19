@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: rabbitmq-service
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: standard
+    disk:
+      name: rabbitmq-data
+      mountPath: /var/lib/rabbitmq
+      sizeGB: 1
+    envVars:
+      - key: RABBITMQ_DEFAULT_USER
+        value: usuario
+      - key: RABBITMQ_DEFAULT_PASS
+        generateValue: true  # Genera una contraseña segura automáticamente
+      - key: RABBITMQ_CONFIG_FILE
+        value: /etc/rabbitmq/rabbitmq
+      - key: RABBITMQ_ENABLED_PLUGINS_FILE
+        value: /etc/rabbitmq/enabled_plugins
+    healthCheckPath: /api/health-checks/node
+    healthCheckTimeout: 60
+    ports:
+      - port: 15672
+        name: management
+      - port: 5672
+        name: amqp
