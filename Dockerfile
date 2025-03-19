@@ -6,7 +6,10 @@ RUN rabbitmq-plugins enable --offline rabbitmq_management rabbitmq_web_dispatch
 # Crear directorio para configuraciones personalizadas
 RUN mkdir -p /etc/rabbitmq/conf.d
 
-# Crear archivo de configuración para el management
+# Copiar archivo de configuración principal
+COPY rabbitmq.conf /etc/rabbitmq/rabbitmq.conf
+
+# Crear archivo de configuración para el management como respaldo
 RUN echo 'management.listener.port = 15672\n\
 management.listener.ip = 0.0.0.0\n\
 management.path.prefix = /\n\
